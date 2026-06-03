@@ -1,43 +1,45 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 
-// In production, fetch this from D1 using Astro.params.book
 const { book } = Astro.params;
+const db = Astro.locals.runtime.env.DB;
 
-// Mock Data
-const bookTitle = book === 'bukhari' ? 'সহিহ বুখারী' : 'হাদিস গ্রন্থ';
-const chapters = [
-  { id: 1, title: 'ওহীর সূচনা', range: '১ - ৭' },
-  { id: 2, title: 'ঈমান (বিশ্বাস)', range: '৮ - ৫৭' },
-  { id: 3, title: 'ইলম (জ্ঞান)', range: '৫৮ - ১৩৪' },
-  { id: 4, title: 'ওযু', range: '১৩৫ - ২৪৭' }
-];
+let chapters = [];
+
+try {
+  // Fetch chapters for the specific book
+  const { results } = await db.prepare("SELECT * FROM chapter").all(); // Adjust WHERE clause based on your relation schema
+  chapters = results;
+} catch (error) {
+  console.error("D1 Fetch Error:", error);
+}
+
+Astro.response.headers.set('Cache-Control', 'public, max-age=86400, s-maxage=86400, stale-while-revalidate');
 ---
 
-<Layout title={bookTitle}>
+<Layout title="অধ্যায়সমূহ">
   <div class="mb-8">
     <a href="/" class="text-brand-600 hover:text-brand-700 text-sm font-medium flex items-center gap-1 mb-4">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
         <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
       </svg>
-      ফিরে যান
+      বইয়ের তালিকায় ফিরে যান
     </a>
-    <h1 class="text-3xl md:text-4xl">{bookTitle}</h1>
-    <p class="text-slate-500 mt-2">অধ্যায়সমূহ নির্বাচন করুন</p>
+    <h1 class="text-3xl md:text-4xl font-bold">অধ্যায়সমূহ</h1>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     {chapters.map((chapter) => (
-      <a href={`/${book}/${chapter.id}`} class="flex justify-between items-center p-5 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700/50 hover:border-brand-500/30 transition-colors">
+      <a href={`/${book}/${chapter.chapter_id}`} class="flex justify-between items-center p-5 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700/50 hover:border-brand-500/30 transition-colors">
         <div class="flex items-center gap-4">
-          <div class="w-10 h-10 rounded-full bg-brand-50 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold text-sm">
-            {chapter.id}
+          <div class="w-10 h-10 rounded-full bg-brand-50 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold text-sm shrink-0">
+            {chapter.chapter_id}
           </div>
           <h3 class="font-semibold text-lg">{chapter.title}</h3>
         </div>
-        <div class="text-right">
+        <div class="text-right shrink-0">
           <span class="text-xs text-slate-400 block mb-1">হাদিস রেঞ্জ</span>
-          <span class="text-sm font-medium text-slate-600 dark:text-slate-300">{chapter.range}</span>
+          <span class="text-sm font-medium text-slate-600 dark:text-slate-300">{chapter.hadis_range}</span>
         </div>
       </a>
     ))}
