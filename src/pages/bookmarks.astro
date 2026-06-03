@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Placeholder UI since DB is not connected yet
+const savedCount = 0;
+---
+
+<Layout title="আমার বুকমার্কস">
+  <div class="mb-8">
+    <h1 class="text-3xl md:text-4xl mb-2">আপনার বুকমার্কস</h1>
+    <p class="text-slate-500">পরবর্তীতে পড়ার জন্য সেভ করা হাদিসসমূহ</p>
+  </div>
+
+  {savedCount === 0 ? (
+    <div class="bg-white dark:bg-slate-800/40 border border-slate-100 dark:border-slate-700/50 border-dashed rounded-2xl p-12 text-center">
+      <div class="w-16 h-16 bg-brand-50 dark:bg-brand-900/20 text-brand-500 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+        </svg>
+      </div>
+      <h3 class="text-lg font-medium text-slate-800 dark:text-slate-200 mb-2">কোনো হাদিস সেভ করা নেই</h3>
+      <p class="text-slate-500 text-sm max-w-sm mx-auto">
+        হাদিস পড়ার সময় বুকমার্ক আইকনে ক্লিক করে সহজেই এখানে সেভ করে রাখতে পারবেন।
+      </p>
+      <a href="/" class="inline-block mt-6 px-6 py-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium rounded-full transition-colors">
+        হাদিস পড়া শুরু করুন
+      </a>
+    </div>
+  ) : (
+    <div>
+      </div>
+  )}
+</Layout>
