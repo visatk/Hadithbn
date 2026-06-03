@@ -11,7 +11,7 @@ interface Props {
 const { bookName, hadithNumber, arabicText, banglaTranslation, narrator, grade } = Astro.props;
 ---
 
-<article class="bg-white dark:bg-slate-800/40 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-700/50 mb-8">
+<article class="bg-white dark:bg-slate-800/40 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 dark:border-slate-700/50 mb-8 relative group transition-all">
   <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-100 dark:border-slate-700/50">
     <div class="flex items-center gap-3">
       <span class="bg-brand-50 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 text-xs font-semibold px-3 py-1 rounded-full border border-brand-100 dark:border-brand-800/50">
@@ -21,7 +21,7 @@ const { bookName, hadithNumber, arabicText, banglaTranslation, narrator, grade }
     </div>
     
     {grade && (
-      <span class={`text-xs font-bold px-2 py-1 rounded ${grade.includes('সহিহ') ? 'text-green-600 bg-green-50 dark:bg-green-900/20' : 'text-orange-600 bg-orange-50 dark:bg-orange-900/20'}`}>
+      <span class={`text-xs font-bold px-2 py-1 rounded ${grade.includes('সহিহ') ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20' : 'text-amber-600 bg-amber-50 dark:bg-amber-900/20'}`}>
         {grade}
       </span>
     )}
@@ -33,7 +33,7 @@ const { bookName, hadithNumber, arabicText, banglaTranslation, narrator, grade }
     </p>
   </div>
 
-  <div class="space-y-3">
+  <div class="space-y-3 mb-6">
     {narrator && (
       <p class="text-sm font-semibold text-brand-600 dark:text-brand-400">
         {narrator} থেকে বর্ণিত:
@@ -43,4 +43,48 @@ const { bookName, hadithNumber, arabicText, banglaTranslation, narrator, grade }
       {banglaTranslation}
     </p>
   </div>
+
+  <div class="flex items-center gap-4 pt-4 border-t border-slate-50 dark:border-slate-700/30 opacity-70 hover:opacity-100 transition-opacity">
+    <button 
+      class="copy-btn flex items-center gap-1.5 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors cursor-pointer"
+      data-text={`${narrator ? narrator + ' থেকে বর্ণিত:\\n' : ''}${banglaTranslation}\\n\\n[${bookName}, হাদিস নং: ${hadithNumber}]`}
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+      </svg>
+      <span>কপি করুন</span>
+    </button>
+  </div>
 </article>
+
+<script>
+  // This pure JS runs once globally on the client and handles all copy buttons seamlessly
+  document.addEventListener('DOMContentLoaded', () => {
+    const copyButtons = document.querySelectorAll('.copy-btn');
+    
+    copyButtons.forEach(button => {
+      button.addEventListener('click', async () => {
+        const textToCopy = button.getAttribute('data-text');
+        const span = button.querySelector('span');
+        
+        if (textToCopy && span) {
+          try {
+            await navigator.clipboard.writeText(textToCopy);
+            const originalText = span.innerText;
+            
+            // Visual feedback
+            span.innerText = 'কপি হয়েছে!';
+            button.classList.add('text-emerald-500');
+            
+            setTimeout(() => {
+              span.innerText = originalText;
+              button.classList.remove('text-emerald-500');
+            }, 2000);
+          } catch (err) {
+            console.error('Failed to copy: ', err);
+          }
+        }
+      });
+    });
+  });
+</script>
