@@ -1,1 +1,40 @@
 @import "tailwindcss";
+
+/* Custom Theme Setup for Tailwind v4 */
+@theme {
+  --font-arabic: "Amiri", serif;
+  --font-bengali: "Hind Siliguri", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  
+  --color-brand-50: #ecfdf5;
+  --color-brand-100: #d1fae5;
+  --color-brand-500: #10b981;
+  --color-brand-600: #059669;
+  --color-brand-900: #064e3b;
+}
+
+@layer base {
+  body {
+    /* Set default font to Bengali for the whole site */
+    font-family: var(--font-bengali);
+    @apply bg-slate-50 text-slate-800 antialiased transition-colors duration-300;
+  }
+  
+  /* Dark mode global styles */
+  @media (prefers-color-scheme: dark) {
+    body {
+      @apply bg-slate-900 text-slate-200;
+    }
+  }
+}
+
+/* Custom Scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 dark:bg-slate-700 rounded-full;
+}
