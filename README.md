@@ -1,43 +1,22 @@
-# Astro Starter Kit: Minimal
+# 📖 Hadith BD (হাদিস বিডি)
 
-```sh
-npm create astro@latest -- --template minimal
-```
+A blazing-fast, minimalist, and Zero-JS Hadith reading platform built with **Astro**, **Cloudflare D1**, and **Tailwind CSS v4**. Designed with a "Low Cognitive Load" principle to provide the best reading experience for authentic Hadiths in Bengali.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+![Astro](https://img.shields.io/badge/Astro-0C1628?style=for-the-badge&logo=astro&logoColor=white)
+![Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)
+![SQLite](https://img.shields.io/badge/Cloudflare_D1-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-## 🚀 Project Structure
+## ✨ Features
+- **Zero-JS Architecture:** Pure Server-Side Rendered (SSR) HTML for lightning-fast page loads.
+- **Edge Global Caching:** Leverages Cloudflare Edge caching for zero-latency database responses.
+- **Minimalist UI/UX:** Dark/Light mode support with optimized typography (`Amiri` for Arabic, `Hind Siliguri` for Bengali).
+- **Interactive Copy:** Lightweight Vanilla JS to easily copy Hadith text with references.
+- **D1 Database:** Highly scalable serverless SQLite database on Cloudflare's Edge.
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🚀 Getting Started
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### 1. Prerequisites
+- Node.js (v18+)
+- Cloudflare Account & `wrangler` CLI installed globally (`npm install -g wrangler`)
+- SQLite3 CLI installed on your machine
