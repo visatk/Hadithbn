@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "সহজে এবং স্পষ্টভাবে প্রামাণ্য হাদিস পড়ুন।" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="bn">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title} | Hadith BD</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		
+		<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+	</head>
+	<body class="flex flex-col min-h-screen">
+		<header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800">
+			<div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+				<a href="/" class="text-xl font-bold text-brand-600 dark:text-brand-500 tracking-tight">
+					হাদিস<span class="text-slate-900 dark:text-white">বিডি</span>
+				</a>
+				<nav class="flex gap-6 text-sm font-medium">
+					<a href="/books" class="hover:text-brand-600 transition-colors">সকল বই</a>
+					<a href="/bookmarks" class="hover:text-brand-600 transition-colors">বুকমার্কস</a>
+				</nav>
+			</div>
+		</header>
+
+		<main class="flex-grow max-w-4xl mx-auto w-full px-4 py-8">
+			<slot />
+		</main>
+
+		<footer class="py-8 border-t border-slate-200 dark:border-slate-800 text-center text-sm text-slate-500">
+			<p>© {new Date().getFullYear()} Hadith BD. Built with focus and clarity.</p>
+		</footer>
+	</body>
+</html>
